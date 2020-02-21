@@ -90,6 +90,29 @@ echo $all_routes
 ## Generate commands to remove services
 After generating the service IDs, the Shell gen_delete_kong_services script, which receives the information that was previously generated with the list_kong_services script as a parameter for execution. This script locates and selects the first installed Kong. Then use the curl -k -X DELETE command, with which the command is generated to remove each of the previously listed services.
 
+### gen_delete_kong_services
+```
+#       Generate commands fro delete kong's services
+#       SESS - 2020-02-19
+
+# TODO: how to use functions declared in session?
+KUBE_FILE=`ls | grep kubeconfig`
+k8s ()
+{
+    kubectl --kubeconfig ~/$KUBE_FILE -n iotaccelerator "$@"
+}
+
+pod=`k8s get pods | grep kong-rc | head -1 | awk '{ print $1 }'`
+all_services=`./list_kong_services`
+
+for service in $all_services
+do
+  service=`echo $service | tr -d '"'`
+  echo "k8s exec $pod -i -t -- curl -k -X DELETE http://localhost:8001/services/$service"
+done
+```
+
+
 ## Generate commands to remove routes
 After generating the IDs of the routes, the Shell script gen_delete_kong_routes, which receives as a parameter for the execution the information that was previously generated with the script list_kong_routes. This script locates and selects the first installed Kong. Then use the curl -k -X DELETE command, with which the command is generated to remove each of the previously listed routes.
 
