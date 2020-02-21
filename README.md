@@ -45,7 +45,10 @@ do
 done
 echo $all_services
 ```
-
+_Command example_
+```
+“Command example”
+```
 
 
 ## List the IDs of the current routes
@@ -84,7 +87,10 @@ do
 done
 echo $all_routes
 ```
-
+_Command example_
+```
+“Command example”
+```
 
 
 ## Generate commands to remove services
@@ -111,7 +117,10 @@ do
   echo "k8s exec $pod -i -t -- curl -k -X DELETE http://localhost:8001/services/$service"
 done
 ```
-
+_Command example_
+```
+“Command example”
+```
 
 ## Generate commands to remove routes
 After generating the IDs of the routes, the Shell script gen_delete_kong_routes, which receives as a parameter for the execution the information that was previously generated with the script list_kong_routes. This script locates and selects the first installed Kong. Then use the curl -k -X DELETE command, with which the command is generated to remove each of the previously listed routes.
@@ -136,6 +145,10 @@ do
   route=`echo $route | tr -d '"'`
   echo "k8s exec $pod -i -t -- curl -k -X DELETE http://localhost:8001/routes/$route"
 done
+```
+_Command example_
+```
+“Command example”
 ```
 
 
@@ -237,7 +250,7 @@ The script extracts from the cvs file the information required to generate the c
 * Print a line on the screen to identify the following command
 * With all the information previously extracted, the command to create each route is generated
 
-### Command example
+_Command example_
 ```
 “Command example”
 ```
