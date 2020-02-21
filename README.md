@@ -21,7 +21,7 @@ After generating the service IDs, the Shell gen_delete_kong_services script, whi
 ## Generate commands to remove routes
 After generating the IDs of the routes, the Shell script gen_delete_kong_routes, which receives as a parameter for the execution the information that was previously generated with the script list_kong_routes. This script locates and selects the first installed Kong. Then use the curl -k -X DELETE command, with which the command is generated to remove each of the previously listed routes.
 
-Generate the commands to create the routes again
+## Generate the commands to create the routes again
 Finally, the new routes must be generated, for this the awk script, gen_create_kong_services.awk is used, which receives the following parameters, where the order is important:
 1. cvs file, converted from the mapping.xlsx file
 2. pod_name
@@ -30,7 +30,9 @@ Finally, the new routes must be generated, for this the awk script, gen_create_k
 5. port = Destination port
 6. version = Destination version in url
 
+# gen_create_kong_services.awk
 ```
+
 #       Generate create services and routes for kong
 #       SESS - 2020-02-19
 
