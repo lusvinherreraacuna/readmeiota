@@ -12,6 +12,42 @@ Each of these steps is done with a different script, which are detailed below:
 ## List the IDs of current services
 It is necessary to list all the IDs of the current services to later remove them, for this the list_kong_services script is used, which is a Shell script. This script does not need to receive parameters in its execution. Which lists the installed kongs and takes the first. Then execute the curl command to get all the services and finally filter only the IDs of each service and display them in the console.
 
+### list_kong_services
+```
+#       List kong services's ids
+#       SESS - 2020-02-18
+
+# TODO: how to use functions declared in session?
+KUBE_FILE=`ls | grep kubeconfig`
+k8s ()
+{
+    kubectl --kubeconfig ~/$KUBE_FILE -n iotaccelerator "$@"
+}
+
+pod=`k8s get pods | grep kong-rc | head -1 | awk '{ print $1 }'`
+next=/services
+all_services=""
+while [ "$next" != "" ]
+do
+  services=`k8s exec $pod -i -t -- curl -k --url http://localhost:8001$next`
+  list=`echo $services | jq '.data[].id'`
+  if [ "$all_services" == "" ]; then
+    all_services=$list
+  else
+    all_services="$all_services $list"
+  fi
+  next=`echo $services | jq '.next'`
+  if [ "$next" == "null" ]; then
+    next=
+  else
+    next=`echo $next | tr -d '"'`
+  fi
+done
+echo $all_services
+```
+
+
+
 ## List the IDs of the current routes
 It is necessary to list all the IDs of the current routes to later eliminate them, for this the list_kong_routes script is used which is a Shell script. This script does not need to receive parameters in its execution. Which lists the installed kongs and takes the first. Then execute the curl command to get all the services and finally filter only the IDs of each route and display them in the console.
 
