@@ -31,7 +31,7 @@ Finally, the new routes must be generated, for this the awk script, gen_create_k
 6. version = Destination version in url
 
 ```
-#       Generate create services and toutes for kong
+#       Generate create services and routes for kong
 #       SESS - 2020-02-19
 
 # Variables from command line:
