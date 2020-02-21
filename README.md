@@ -1,11 +1,11 @@
 # Readme IOTA
 ###This readme is a guide to using the scripts that mass provision the Kong service in a POD, which follows the following process:
 
-   • List the IDs of the services currently configured in the pod.
-   • List the IDs of the current routes configured in the pod.
-   • Generate commands to remove services
-   • Generate commands to eliminate routes
-   • Generate the commands to create the routes again
+   *List the IDs of the services currently configured in the pod
+   * List the IDs of the current routes configured in the pod
+   * Generate commands to remove services
+   * Generate commands to eliminate routes
+   * Generate the commands to create the routes again
    
 Each of these steps is done with a different script, which are detailed below:
 List the IDs of current services
