@@ -227,13 +227,17 @@ BEGIN {
 
 ```
 The script extracts from the cvs file the information required to generate the commands to create the new routes, as follows:
-• Validate the name of the section
-• Each line makes it lowercase
-• Remove any character other than letter, number or script from each line
-• Eliminate the spaces of each line
-• Identify whether it is internal or external
-• Insert the new external domain
-• Identify the Rest method of each line
-• Print a line on the screen to identify the following command
-• With all the information previously extracted, the command to create each route is generated
+* Validate the name of the section
+* Each line makes it lowercase
+* Remove any character other than letter, number or script from each line
+* Eliminate the spaces of each line
+* Identify whether it is internal or external
+* Insert the new external domain
+* Identify the Rest method of each line
+* Print a line on the screen to identify the following command
+* With all the information previously extracted, the command to create each route is generated
+
+### Command example
+```
 “Command example”
+```
