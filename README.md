@@ -8,16 +8,17 @@ This readme is a guide to using the scripts that mass provision the Kong service
    * Generate the commands to create the routes again
    
 Each of these steps is done with a different script, which are detailed below:
-List the IDs of current services
+
+## List the IDs of current services
 It is necessary to list all the IDs of the current services to later remove them, for this the list_kong_services script is used, which is a Shell script. This script does not need to receive parameters in its execution. Which lists the installed kongs and takes the first. Then execute the curl command to get all the services and finally filter only the IDs of each service and display them in the console.
 
-List the IDs of the current routes
+## List the IDs of the current routes
 It is necessary to list all the IDs of the current routes to later eliminate them, for this the list_kong_routes script is used which is a Shell script. This script does not need to receive parameters in its execution. Which lists the installed kongs and takes the first. Then execute the curl command to get all the services and finally filter only the IDs of each route and display them in the console.
 
-Generate commands to remove services
+## Generate commands to remove services
 After generating the service IDs, the Shell gen_delete_kong_services script, which receives the information that was previously generated with the list_kong_services script as a parameter for execution. This script locates and selects the first installed Kong. Then use the curl -k -X DELETE command, with which the command is generated to remove each of the previously listed services.
 
-Generate commands to remove routes
+## Generate commands to remove routes
 After generating the IDs of the routes, the Shell script gen_delete_kong_routes, which receives as a parameter for the execution the information that was previously generated with the script list_kong_routes. This script locates and selects the first installed Kong. Then use the curl -k -X DELETE command, with which the command is generated to remove each of the previously listed routes.
 
 Generate the commands to create the routes again
