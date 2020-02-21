@@ -10,7 +10,7 @@ This readme is a guide to using the scripts that mass provision the Kong service
 Each of these steps is done with a different script, which are detailed below:
 
 ## List the IDs of current services
-It is necessary to list all the IDs of the current services to later remove them, for this the **list_kong_services script** is used, which is a Shell script. This script does not need to receive parameters in its execution. Which lists the installed kongs and takes the first. Then execute the curl command to get all the services and finally filter only the IDs of each service and display them in the console.
+It is necessary to list all the IDs of the current services to later remove them, for this the **list_kong_services** script is used, which is a Shell script. This script does not need to receive parameters in its execution. Which lists the installed kongs and takes the first. Then execute the curl command to get all the services and finally filter only the IDs of each service and display them in the console.
 
 ### list_kong_services
 ```
