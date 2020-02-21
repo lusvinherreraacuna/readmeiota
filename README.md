@@ -1,5 +1,5 @@
 # Readme IOTA
-###This readme is a guide to using the scripts that mass provision the Kong service in a POD, which follows the following process:
+### This readme is a guide to using the scripts that mass provision the Kong service in a POD, which follows the following process:
 
    * List the IDs of the services currently configured in the pod
    * List the IDs of the current routes configured in the pod
