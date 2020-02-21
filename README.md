@@ -31,7 +31,80 @@ Finally, the new routes must be generated, for this the awk script, gen_create_k
 6. version = Destination version in url
 
 ```
-"The script"
+#       Generate create services and toutes for kong
+#       SESS - 2020-02-19
+
+# Variables from command line:
+#       - pod_name
+#       - api           Kong's admin url, default 'http://localhost:8001'
+#       - vip           Destination ip or name
+#       - port          Destination port
+#       - version       Destination version in url
+#
+# Remeber to set FS, depending on regional settings Excel may separate fields using semicolon instead of comma.
+
+BEGIN {
+  FS = ",";
+  if (api == "") {
+    api = "http://localhost:8001"
+  }
+  vip_and_port = vip ":" port
+  if (version == "") {
+    version = "1"
+  }
+}
+{
+  # Mappings are numbered
+  if ($1 ~ /[0-9]+/) {
+    name = tolower(sec) "-" tolower($2) "-" version "-" $1
+    name = gensub(/[^a-zA-Z0-9\- ]/, "", "g", name)
+    name = gensub(/ /, "-", "g", name)
+    external = gensub(/<version>/, version, "g", $3)
+    internal = gensub(/<vip:port>/, vip_and_port, "g", $4)
+    # do we have destination?
+    if (internal != "") {
+      internal = gensub(/<version>/, version, "g", internal)
+      external = gensub(/https:\/\/<external_domain>/, "", "g", external)
+      get = 0; post = 0; put = 0; delete_ = 0; have_methods = 0;
+      method = $5
+      if (method != "") {
+        get = index(method, "GET")
+        post = index(method, "POST")
+        put = index(method, "PUT")
+        delete_ = index(method, "DELETE")
+        have_methods = get + post + put + delete_
+      }
+      print "# mapping", name, external, ">", internal, method
+      # Service:
+      print "k8s exec " pod " -- curl -H 'Content-Type: application/json' -X POST " api \
+        "/services --data '{ \"name\": \"" name "\", \"url\": \"" internal "\" }'"
+      # Route:
+      methods = ""
+      if (have_methods > 0) {
+        methods = ", \"methods\": ["
+        if (get > 0) {
+          methods = methods "\"GET\","
+        }
+        if (post > 0) {
+          methods = methods "\"POST\","
+        }
+        if (put > 0) {
+          methods = methods "\"PUT\","
+        }
+        if (delete_ > 0) {
+          methods = methods "\"DELETE\","
+        }
+        methods = gensub(/,$/, "", "g", methods) "]"
+        print "k8s exec " pod " -- curl -H 'Content-Type: application/json' -X POST " api \
+          "/services/" name "/routes --data '{ \"paths\": \"" external "\"" methods " }'"
+      }
+    }
+  } else {
+    # is section name
+    sec = $1
+  }
+}
+
 ```
 The script extracts from the cvs file the information required to generate the commands to create the new routes, as follows:
 • Validate the name of the section
