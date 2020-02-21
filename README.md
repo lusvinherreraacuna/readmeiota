@@ -30,8 +30,9 @@ Finally, the new routes must be generated, for this the awk script, gen_create_k
 5. port = Destination port
 6. version = Destination version in url
 
-
+```
 "The script"
+```
 The script extracts from the cvs file the information required to generate the commands to create the new routes, as follows:
 • Validate the name of the section
 • Each line makes it lowercase
